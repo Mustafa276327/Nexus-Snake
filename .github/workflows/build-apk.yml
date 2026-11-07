@@ -59,10 +59,17 @@ jobs:
           cd android
           gradle wrapper --gradle-version 8.5
 
+      - name: Debug - show android structure
+        run: |
+          cd android
+          ls -la
+          ls -la app/
+          cat app/build.gradle
+
       - name: Build Release APK (unsigned)
         run: |
           cd android
-          ./gradlew assembleRelease --no-daemon -PversionCode=${{ github.run_number }} -PversionName=${{ github.ref_name == 'main' && '1.0.0-dev' || github.ref_name }}
+          ./gradlew assembleRelease --no-daemon --stacktrace -PversionCode=${{ github.run_number }} -PversionName=${{ github.ref_name == 'main' && '1.0.0-dev' || github.ref_name }}
 
       - name: Verify APK
         run: |
