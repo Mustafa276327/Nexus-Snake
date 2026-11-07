@@ -1,0 +1,26 @@
+{
+  "name": "nexus-snake",
+  "version": "1.0.0",
+  "description": "Feature-rich Snake game for Web and Android",
+  "main": "src/main.js",
+  "scripts": {
+    "cap:add": "npx cap add android",
+    "cap:build": "npx cap build android",
+    "cap:run": "npx cap run android",
+    "cap:sync": "npx cap sync android",
+    "cap:open": "npx cap open android"
+  },
+  "keywords": ["snake", "game", "canvas", "capacitor", "android"],
+  "author": "Nexus Apps",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/core": "^6.1.0",
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/preferences": "^6.0.0",
+    "@capacitor/haptics": "^6.0.0",
+    "@capacitor/status-bar": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.0"
+  }
+}

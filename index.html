@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1117">
+  <meta name="description" content="Nexus Snake - Modern yılan oyunu">
+  <title>Nexus Snake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <canvas id="game" tabindex="0" aria-label="Oyun alanı"></canvas>
+
+  <div id="hud" class="hud" role="region" aria-label="Oyun bilgileri">
+    <div class="hud-left">
+      <div class="hud-item">
+        <span class="hud-label">SKOR</span>
+        <span class="hud-value" id="score">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">EN YÜKSEK</span>
+        <span class="hud-value" id="highScore">0</span>
+      </div>
+    </div>
+    <div class="hud-center" id="modeInfo">
+      <span class="mode-name" id="modeName">KLASİK</span>
+      <span class="mode-desc" id="modeDesc">Yem ye, büyü, çarpmadan kaçın</span>
+    </div>
+    <div class="hud-right">
+      <div class="hud-item" id="timerContainer" style="display: none;">
+        <span class="hud-label">SÜRE</span>
+        <span class="hud-value" id="timer">60</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">SEVİYE</span>
+        <span class="hud-value" id="level">1</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="powerupIndicators" class="powerup-indicators" role="region" aria-label="Aktif güçlendirmeler"></div>
+
+  <div id="menuOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+    <div class="modal">
+      <header class="modal-header">
+        <h1 id="menuTitle">NEXUS SNAKE</h1>
+        <p class="subtitle">Modern yılan deneyimi</p>
+      </header>
+      <div class="modal-body">
+        <nav class="mode-select" role="listbox" aria-label="Oyun modu seç">
+          <button class="mode-card" data-mode="classic" role="option" aria-selected="true">
+            <span class="mode-icon">🐍</span>
+            <div class="mode-info">
+              <span class="mode-card-name">Klasik</span>
+              <span class="mode-card-desc">Yem ye, büyü, duvarlardan kaçın</span>
+            </div>
+            <span class="mode-badge">BAŞLANGIÇ</span>
+          </button>
+          <button class="mode-card" data-mode="timed" role="option" aria-selected="false">
+            <span class="mode-icon">⏱️</span>
+            <div class="mode-info">
+              <span class="mode-card-name">Zamanlı</span>
+              <span class="mode-card-desc">60 saniye, her yem +5 saniye</span>
+            </div>
+            <span class="mode-badge locked" data-unlock="score:100">KİLİTLİ</span>
+          </button>
+          <button class="mode-card" data-mode="survival" role="option" aria-selected="false">
+            <span class="mode-icon">🛡️</span>
+            <div class="mode-info">
+              <span class="mode-card-name">Hayatta Kalma</span>
+              <span class="mode-card-desc">Yem yok, otomatik büyür, alan daralır</span>
+            </div>
+            <span class="mode-badge locked" data-unlock="score:500">KİLİTLİ</span>
+          </button>
+          <button class="mode-card" data-mode="maze" role="option" aria-selected="false">
+            <span class="mode-icon">🧩</span>
+            <div class="mode-info">
+              <span class="mode-card-name">Labirent</span>
+              <span class="mode-card-desc">Sabit engeller, tek yem, mükemmel yol</span>
+            </div>
+            <span class="mode-badge locked" data-unlock="score:1000">KİLİTLİ</span>
+          </button>
+        </nav>
+        <div class="menu-actions">
+          <button class="btn btn-primary" id="startBtn">OYNA</button>
+          <button class="btn btn-secondary" id="settingsBtn">⚙️ AYARLAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pauseOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+    <div class="modal modal-small">
+      <header class="modal-header">
+        <h2 id="pauseTitle">DURAKLATILDI</h2>
+      </header>
+      <div class="modal-body">
+        <div class="pause-stats" id="pauseStats"></div>
+        <div class="menu-actions">
+          <button class="btn btn-primary" id="resumeBtn">DEVAM ET</button>
+          <button class="btn btn-secondary" id="restartBtn">YENİDEN BAŞLA</button>
+          <button class="btn btn-ghost" id="quitBtn">MENÜYE DÖN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameOverOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+    <div class="modal modal-small">
+      <header class="modal-header">
+        <h2 id="gameOverTitle">OYUN BİTTİ</h2>
+      </header>
+      <div class="modal-body">
+        <div class="final-stats" id="finalStats"></div>
+        <div class="menu-actions">
+          <button class="btn btn-primary" id="playAgainBtn">TEKRAR OYNA</button>
+          <button class="btn btn-secondary" id="changeModeBtn">MOD DEĞİŞTİR</button>
+          <button class="btn btn-ghost" id="mainMenuBtn">ANA MENÜ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="settingsOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="modal modal-wide">
+      <header class="modal-header">
+        <h2 id="settingsTitle">AYARLAR</h2>
+        <button class="btn btn-ghost btn-icon" id="closeSettingsBtn" aria-label="Kapat">✕</button>
+      </header>
+      <div class="modal-body">
+        <section class="settings-section">
+          <h3>Tema</h3>
+          <div class="theme-selector" role="radiogroup" aria-label="Tema seç">
+            <label class="theme-option" data-theme="dark">
+              <input type="radio" name="theme" value="dark" aria-label="Koyu tema">
+              <span class="theme-preview dark"></span>
+              <span>Koyu</span>
+            </label>
+            <label class="theme-option" data-theme="light">
+              <input type="radio" name="theme" value="light" aria-label="Açık tema">
+              <span class="theme-preview light"></span>
+              <span>Açık</span>
+            </label>
+            <label class="theme-option" data-theme="neon">
+              <input type="radio" name="theme" value="neon" aria-label="Neon tema">
+              <span class="theme-preview neon"></span>
+              <span>Neon</span>
+            </label>
+            <label class="theme-option" data-theme="retro">
+              <input type="radio" name="theme" value="retro" aria-label="Retro tema">
+              <span class="theme-preview retro"></span>
+              <span>Retro</span>
+            </label>
+          </div>
+        </section>
+        <section class="settings-section">
+          <h3>Ses ve Titreşim</h3>
+          <div class="toggle-group">
+            <label class="toggle">
+              <input type="checkbox" id="soundToggle" checked>
+              <span class="toggle-slider"></span>
+              <span>Ses efektleri</span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="hapticsToggle" checked>
+              <span class="toggle-slider"></span>
+              <span>Titreşim</span>
+            </label>
+          </div>
+        </section>
+        <section class="settings-section">
+          <h3>Kontroller</h3>
+          <div class="control-options">
+            <label class="control-option">
+              <input type="radio" name="control" value="swipe" checked>
+              <span>Kaydır (Dokunmatik)</span>
+            </label>
+            <label class="control-option">
+              <input type="radio" name="control" value="dpad">
+              <span>Sanal D-Pad</span>
+            </label>
+            <label class="control-option">
+              <input type="radio" name="control" value="keys">
+              <span>Klavye (Ok tuşları / WASD)</span>
+            </label>
+          </div>
+        </section>
+        <section class="settings-section">
+          <h3>Veriler</h3>
+          <button class="btn btn-danger" id="clearDataBtn">TÜM VERİLERİ SİL</button>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" role="region" aria-live="polite" aria-label="Bildirimler"></div>
+
+  <div id="dpadOverlay" class="dpad-overlay hidden" role="region" aria-label="Sanal yön tuşları">
+    <button class="dpad-btn" data-dir="up" aria-label="Yukarı">▲</button>
+    <div class="dpad-middle">
+      <button class="dpad-btn" data-dir="left" aria-label="Sol">◄</button>
+      <button class="dpad-btn" data-dir="right" aria-label="Sağ">►</button>
+    </div>
+    <button class="dpad-btn" data-dir="down" aria-label="Aşağı">▼</button>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
