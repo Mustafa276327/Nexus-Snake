@@ -138,6 +138,25 @@ export const THEMES = {
 };
 
 export const MODES = {
+  arena: {
+    id: 'arena',
+    name: 'Arena',
+    icon: '🌐',
+    description: 'Sürekli hareket, kütle büyüt, rakipleri kes',
+    unlockScore: 0,
+    baseSpeed: 168,
+    speedIncrease: 0,
+    speedInterval: 9999,
+    maxSpeed: 168,
+    wallsKill: false,
+    wrapAround: false,
+    autoGrow: false,
+    foodSpawnInterval: 0,
+    shrinkWalls: false,
+    mazeLayout: null,
+    scoreMultiplier: 1,
+    isArena: true
+  },
   classic: {
     id: 'classic',
     name: 'Klasik',
@@ -229,7 +248,8 @@ export const STORAGE_KEYS = {
   SETTINGS: 'ns_settings',
   STATS: 'ns_stats',
   LAST_MODE: 'ns_last_mode',
-  UNLOCKED_MODES: 'ns_unlocked_modes'
+  UNLOCKED_MODES: 'ns_unlocked_modes',
+  ARENA_SKIN: 'ns_arena_skin'
 };
 
 export const DEFAULT_SETTINGS = {

@@ -22,6 +22,38 @@ android {
         }
     }
 
+    // Release signing: env vars (CI) or android/keystore.properties (local).
+    // If neither is present the build still succeeds, but produces an unsigned APK.
+    def signingProps = new Properties()
+    def signingPropsFile = rootProject.file('keystore.properties')
+    if (signingPropsFile.exists()) {
+        signingPropsFile.withInputStream { signingProps.load(it) }
+    }
+    def releaseStoreFile = System.getenv('KEYSTORE_FILE') ?: signingProps.getProperty('storeFile')
+    def releaseStorePassword = System.getenv('KEYSTORE_PASSWORD') ?: signingProps.getProperty('storePassword')
+    def releaseKeyAlias = System.getenv('KEY_ALIAS') ?: signingProps.getProperty('keyAlias')
+    def releaseKeyPassword = System.getenv('KEY_PASSWORD') ?: signingProps.getProperty('keyPassword')
+    def hasReleaseSigning = releaseStoreFile && releaseStorePassword && releaseKeyAlias && releaseKeyPassword && file(releaseStoreFile).exists()
+
+    signingConfigs {
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17

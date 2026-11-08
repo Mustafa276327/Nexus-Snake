@@ -51,6 +51,14 @@
       </header>
       <div class="modal-body">
         <nav class="mode-select" role="listbox" aria-label="Oyun modu seç">
+          <button class="mode-card mode-card-arena" data-mode="arena" role="option" aria-selected="false">
+            <span class="mode-icon">🌐</span>
+            <div class="mode-info">
+              <span class="mode-card-name">Arena <span class="new-tag">YENİ</span></span>
+              <span class="mode-card-desc">Sürekli hareket · kütle büyüt · rakipleri kes</span>
+            </div>
+            <span class="mode-badge">HAZIR</span>
+          </button>
           <button class="mode-card" data-mode="classic" role="option" aria-selected="true">
             <span class="mode-icon">🐍</span>
             <div class="mode-info">
@@ -84,6 +92,13 @@
             <span class="mode-badge locked" data-unlock="score:1000">KİLİTLİ</span>
           </button>
         </nav>
+        <section class="skin-section" aria-label="Yılan derisi seç">
+          <div class="skin-section-head">
+            <h3>Yılan Derisi</h3>
+            <span class="skin-hint">Arena modunda geçerli</span>
+          </div>
+          <div id="skinPicker" class="skin-picker" role="listbox" aria-label="Deriler"></div>
+        </section>
         <div class="menu-actions">
           <button class="btn btn-primary" id="startBtn">OYNA</button>
           <button class="btn btn-secondary" id="settingsBtn">⚙️ AYARLAR</button>
@@ -197,6 +212,8 @@
   </div>
 
   <div id="toastContainer" class="toast-container" role="region" aria-live="polite" aria-label="Bildirimler"></div>
+
+  <button id="arenaBoost" class="arena-boost" aria-label="Hızlan">⚡</button>
 
   <div id="dpadOverlay" class="dpad-overlay hidden" role="region" aria-label="Sanal yön tuşları">
     <button class="dpad-btn" data-dir="up" aria-label="Yukarı">▲</button>

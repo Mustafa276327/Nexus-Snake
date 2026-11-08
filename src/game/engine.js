@@ -1,7 +1,7 @@
 // Nexus Snake - Core Game Engine (Fixed Timestep Loop)
 
-import { GameState as GS, GameState as GameStateClass } from './state.js';
-import { Direction, MODES, GRID_DEFAULTS, STORAGE_KEYS, POWERUP_TYPES } from './config.js';
+import { GameState as GameStateClass } from './state.js';
+import { GameState as GS, Direction, MODES, GRID_DEFAULTS, STORAGE_KEYS, POWERUP_TYPES } from './config.js';
 import { renderer } from './renderer.js';
 import { inputManager } from './input.js';
 import { storage } from './storage.js';
@@ -11,6 +11,7 @@ import { ClassicMode } from './modes/classic.js';
 import { TimedMode } from './modes/timed.js';
 import { SurvivalMode } from './modes/survival.js';
 import { MazeMode } from './modes/maze.js';
+import { ArenaMode } from './arena/arena.js';
 import { hud } from '../ui/hud.js';
 import { menu } from '../ui/menu.js';
 import { toast } from '../ui/toast.js';
@@ -84,6 +85,12 @@ export class GameEngine {
     const lastMode = await storage.getLastMode();
     menu.setSelectedMode(lastMode);
 
+    // Mirror the arena skin into localStorage for the synchronous game loop.
+    try {
+      const savedSkin = await storage.get('arena_skin');
+      if (savedSkin) localStorage.setItem('ns_arena_skin', JSON.stringify(savedSkin));
+    } catch { /* ignore */ }
+
     // Set up input callbacks
     inputManager.setDirectionChangeCallback((dir) => {
       this.nextDirection = dir;
@@ -100,6 +107,7 @@ export class GameEngine {
 
     // Initialize mode instances
     this.modes = {
+      arena: new ArenaMode(this),
       classic: new ClassicMode(this),
       timed: new TimedMode(this),
       survival: new SurvivalMode(this),
@@ -116,9 +124,13 @@ export class GameEngine {
   handleStateChange(current, previous) {
     switch (current) {
       case GS.MENU:
+        this.modeInstance?.stop?.();
+        renderer.setArenaMode(false);
         menu.show();
         break;
       case GS.PLAYING:
+        menu.hideGameOver();
+        menu.hidePause();
         menu.hide();
         if (previous === GS.PAUSED) {
           this.lastTime = performance.now();
@@ -166,6 +178,20 @@ export class GameEngine {
     this.modeInstance = this.modes[modeId];
     storage.setLastMode(modeId);
 
+    // Arena is a continuous, self-contained mode (no grid).
+    if (MODES[modeId]?.isArena) {
+      renderer.setArenaMode(true);
+      this.score = 0;
+      this.modeInstance.init();
+      this.state.set(GS.PLAYING);
+      this.lastTime = performance.now();
+      this.accumulator = 0;
+      this.run();
+      return;
+    }
+
+    renderer.setArenaMode(false);
+
     // Reset game state
     this.resetGame();
 
@@ -200,6 +226,7 @@ export class GameEngine {
     this.slowDownEndTime = 0;
     this.speedBoostEndTime = 0;
     this.speedAccumulator = 0;
+    this.growing = false;
 
     // Reset managers
     this.powerupManager.reset();
@@ -232,7 +259,7 @@ export class GameEngine {
     if (!this.running) return;
 
     const now = performance.now();
-    const delta = now - this.lastTime;
+    const delta = Math.min(now - this.lastTime, 100);
     this.lastTime = now;
 
     this.accumulator += delta;
@@ -251,6 +278,15 @@ export class GameEngine {
 
   fixedUpdate(dt) {
     if (!this.state.isPlaying()) return;
+
+    // Arena runs its own continuous update
+    if (MODES[this.currentMode]?.isArena) {
+      this.modeInstance.update(dt);
+      return;
+    }
+
+    // Flush queued direction input (grid modes)
+    inputManager.poll();
 
     // Update powerup timers
     this.updatePowerupTimers();
@@ -490,26 +526,39 @@ export class GameEngine {
   }
 
   getPauseStats() {
+    const isArena = !!MODES[this.currentMode]?.isArena;
     return {
       score: this.score,
-      level: this.level,
-      foodEaten: this.foodEaten,
-      mode: MODES[this.currentMode]?.name || this.currentMode
+      level: isArena ? 1 : this.level,
+      foodEaten: isArena ? (this.modeInstance?.kills || 0) : this.foodEaten,
+      mode: MODES[this.currentMode]?.name || this.currentMode,
+      isArena
     };
   }
 
   getFinalStats() {
+    const isArena = !!MODES[this.currentMode]?.isArena;
     return {
       score: this.score,
       highScore: this.highScores[this.currentMode] || 0,
-      level: this.level,
-      foodEaten: this.foodEaten,
+      level: isArena ? 1 : this.level,
+      foodEaten: isArena ? (this.arenaKills || 0) : this.foodEaten,
       mode: MODES[this.currentMode]?.name || this.currentMode,
+      isArena,
+      kills: isArena ? (this.arenaKills || 0) : 0,
       isNewRecord: this.score === (this.highScores[this.currentMode] || 0)
     };
   }
 
   render() {
+    // Arena renders its own world and HUD
+    if (MODES[this.currentMode]?.isArena) {
+      if (this.state.isPlaying() || this.state.isPaused() || this.state.isGameOver()) {
+        this.modeInstance.render();
+      }
+      return;
+    }
+
     const gameState = {
       snake: this.snake,
       food: this.food,
@@ -545,7 +594,16 @@ export class GameEngine {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
     }
+    this.modeInstance?.stop?.();
+    renderer.setArenaMode(false);
     this.state.set(GS.MENU);
+  }
+
+  // Called by the arena when the player snake dies.
+  onArenaGameOver(score, kills) {
+    this.score = Math.floor(score) || 0;
+    this.arenaKills = kills || 0;
+    this.state.set(GS.GAME_OVER);
   }
 
   restart() {

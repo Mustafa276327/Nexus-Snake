@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <atlases_list>
+        <default path="default/atlas_default.xml" />
+        <common path="common/atlas_common.xml" />
+        <game path="common/atlas_game.xml" />
+    </atlases_list>
+
+    <lobby>
+        <title id="logo" sprite_id="logo:default" amplitude="10" />
+
+        <play_button_default>
+            <play_button id="btnPlay" sprite_id="btn_play:common" sprite_id_pressed="btn_play_pressed:common" scale="0.95">
+                <text id="button_play_title" size="350 77" position="23 15" metrics="line" font="common/fonts/NotoSans-CondensedMedium.ttf" font_size="90" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline" />
+            </play_button>
+        </play_button_default>
+
+        <decoration_front>
+            <snow snowflakes_list="snowflake_0 snowflake_1 snowflake_2 snowflake_3 snowflake_4 snowflake_5" />
+        </decoration_front>
+    </lobby>
+
+    <wardrobe>
+        <decoration_front>
+            <snow snowflakes_list="snowflake_0 snowflake_1 snowflake_2 snowflake_3 snowflake_4 snowflake_5" />
+        </decoration_front>
+    </wardrobe>
+
+    <game>
+    </game>
+
+    <food_resources>
+        <shine sprite_id="shine:default" />
+        <coin sprite_id="coin:game" value="1" scale="0.65" radius="70" />
+
+        <powerups>
+            <magnet sprite_id="items_powerup_magnet:common" value="250" scale="0.75" rotation="30" />
+            <multiply sprite_id="items_powerup_multiply:common" value="500" scale="0.75" rotation="25" />
+            <radar sprite_id="items_powerup_radar:common" value="250" scale="0.75" rotation="-5" />
+            <speedup sprite_id="items_powerup_speedup:common" value="250" scale="0.75" rotation="-15" />
+            <turn sprite_id="items_powerup_turn:common" value="250" scale="0.75" rotation="-35" />
+            <zoom sprite_id="items_powerup_zoom:common" value="250" scale="0.75" rotation="5" />
+        </powerups>
+
+        <triggers>
+            <piggy sprite_id="piggybank:game" value="250" />
+        </triggers>
+    </food_resources>
+
+    <lastchance_popup>
+        <autoload size="654 720" shade="1" shade_color="dc000000" overscale="1.1" speed="10" direction="0 0">
+            <alignment h_align="center" v_align="top">
+                <image sprite_id="shine_soft:common" scale="45" color="ff4d58c0" />
+                <spine spine_desc="common/animations/menu/particles.json" spine_atlas="common/animations/menu/particles.atlas" spine_animation="idle" spine_loop="true" position="0 -450" />
+            </alignment>
+
+            <image sprite_id="progress_circle:common" position="327 215" color="33ffffff">
+                <text id="txtTimeout" size="70" position="47 39" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="90" color="fff7dd10" />
+
+                <bounds position="82 64" anchor="0.5">
+                    <text id="txtTimeoutFly" size="70" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="90" color="fff7dd10" />
+                </bounds>
+
+                <clock id="clockTimer" sprite_id="progress_circle:common" position="82" scale="0.7" />
+            </image>
+
+            <stack orientation="vertical" spacing="15" position="327 332" anchor="0.5 0">
+                <stack orientation="horizontal" spacing="15" anchor="0">
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" autosize="true" anchor="0" padding="14 -5 14 7">
+                        <stack orientation="horizontal" anchor="0.5" position="112 30" spacing="15">
+                            <node size="70">
+                                <image sprite_id="shine_soft:common" position="35 43" color="ff1e5984" scale="5" />
+                                <image sprite_id="icon_cup:game" position="35" />
+                            </node>
+
+                            <text text="--" id="txtRank" size="128 45" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        </stack>
+                    </nine_patch>
+
+                    <stack>
+                        <nine_patch id="weightBack" sprite_id="nine_patch_info_back:game" patch="18 18 4 4" autosize="true" anchor="0" padding="14 -5 14 6">
+                            <stack orientation="horizontal" anchor="0.5" position="192 30" spacing="15">
+                                <node size="70">
+                                    <image id="imgWeightShine" visible="0" sprite_id="shine_soft:common" position="35 43" color="ff1e5984" scale="5" />
+                                    <image id="imgIconWeight" sprite_id="icon_weight:game" position="0 69" hotspot="0 69" />
+                                </node>
+
+                                <text id="txtWeight" text="0" size="253 45" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                            </stack>
+                        </nine_patch>
+                    </stack>
+                </stack>
+
+                <stack orientation="horizontal" spacing="15" anchor="0">
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="364 48" anchor="0">
+                        <text id="treasure_hunter_popup_collect" size="142 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+
+                        <stack orientation="horizontal" alignment="top" anchor="1 0" position="350 8" spacing="8">
+                            <stack id="grpEventCurrency" visible="0" orientation="horizontal" alignment="top" spacing="5">
+                                <node size="28 31">
+                                    <node id="imgEventCurrency" position="14 17" scale="0.23" />
+                                </node>
+
+                                <text id="txtEventCurrency" size="56 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                            </stack>
+
+                            <text id="txtEventCurrencySeparator" visible="0" text="/" size="15 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+
+                            <bounds id="grpCoins">
+                                <image sprite_id="icon_coin:common" position="-20 18" scale="0.4" />
+                                <text id="txtCoins" size="56 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                            </bounds>
+                        </stack>
+                    </nine_patch>
+
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="244 48" anchor="0">
+                        <text id="treasure_hunter_popup_kills" size="155 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtKills" size="50 26" position="180 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+                </stack>
+
+                <stack orientation="horizontal" spacing="15" anchor="0">
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="364 48" anchor="0">
+                        <text id="treasure_hunter_popup_time" size="230 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtTime" size="95 26" position="255 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="244 48" anchor="0">
+                        <text id="treasure_hunter_popup_experience" size="135 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtExperience" size="70 26" position="160 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+                </stack>
+            </stack>
+
+            <layout item_size="288 106" size="576 106" position="40 560">
+                <button id="btnRespawnCoins" visible="0" sprite_id="btn_big_green:common" pressed_scale="0.97">
+                    <bounds anchor="0.5" position="128 47">
+                        <image sprite_id="icon_coin:common" position="-34 34" scale="0.75" />
+                        <text id="txtPrice" size="220 50" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline_green" />
+                    </bounds>
+                </button>
+
+                <button id="btnRespawnVideo" visible="0" sprite_id="btn_big_green:common" pressed_scale="0.97">
+                    <image id="imgVideo" sprite_id="icon_video_green:common" position="128 52" />
+                </button>
+
+                <button id="btnRespawnFree" visible="0" sprite_id="btn_big_green:common" pressed_scale="0.97">
+                    <text id="btn_free" size="220 50" position="18 17" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline_green" />
+                </button>
+            </layout>
+
+            <button id="btnClose" visible="0" size="300 50" hotspot="150 0" position="327 680" pressed_scale="0.97" color="0">
+                <text id="lastchance_popup_no_thanks" size="260 25" position="20 0" metrics="line" font="common/fonts/NotoSans-CondensedMedium.ttf" font_size="50" />
+            </button>
+
+            <alignment h_align="center" v_align="top">
+                <nine_patch sprite_id="nine_patch_header:common" patch="0 1 12 2" size="900 64" hotspot="450 0" position="0 22" color="40000000">
+                    <text id="lastchance_popup_title" size="574 46" position="163 2" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="ffffff79" shadow_offset="2 3" shadow_color="33000000" />
+                </nine_patch>
+
+                <text id="sessiontimeout_popup_tip" size="574 30" position="-287 92" metrics="line" font="common/fonts/NotoSans-CondensedMedium.ttf" font_size="50" />
+            </alignment>
+        </autoload>
+    </lastchance_popup>
+
+    <gameover_popup>
+        <autoload size="654 720" shade="1" shade_color="dc000000" overscale="1.1" speed="10" direction="0 0">
+            <alignment h_align="center" v_align="top">
+                <image sprite_id="shine_soft:common" scale="45" color="ff4d58c0" />
+                <spine spine_desc="common/animations/menu/particles.json" spine_atlas="common/animations/menu/particles.atlas" spine_animation="idle" spine_loop="true" position="0 -450" />
+            </alignment>
+
+            <node position="327 185">
+                <image sprite_id="shine_soft:common" scale="15" color="70d3d8ff" />
+
+                <rotator mode="rotation" phase="0" speed="1" type="sine">
+                    <image sprite_id="rays:common" scale="0.7" color="ff8bbadb" />
+                </rotator>
+
+                <image sprite_id="icon_cup_big:game" position="0 16" />
+                <text text="--" id="txtRank" size="64 38" position="-32 -21" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="ff913000" shadow_offset="1 2" shadow_color="ffffffff" />
+            </node>
+
+            <stack orientation="vertical" spacing="15" position="327 332" anchor="0.5 0">
+                <stack>
+                    <nine_patch id="weightBack" sprite_id="nine_patch_info_back:game" patch="18 18 4 4" autosize="true" anchor="0" padding="14 -5 14 6">
+                        <stack orientation="horizontal" anchor="0.5" position="192 30" spacing="15">
+                            <node size="70">
+                                <image id="imgWeightShine" visible="0" sprite_id="shine_soft:common" position="35 43" color="ff1e5984" scale="5" />
+                                <image id="imgIconWeight" sprite_id="icon_weight:game" position="0 69" hotspot="0 69" />
+                            </node>
+                            <text id="txtWeight" text="0" size="509 45" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        </stack>
+                    </nine_patch>
+                </stack>
+
+                <stack orientation="horizontal" spacing="15" anchor="0">
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="364 48" anchor="0">
+                        <text id="treasure_hunter_popup_collect" size="142 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+
+                        <stack orientation="horizontal" alignment="top" anchor="1 0" position="350 8" spacing="8">
+                            <stack id="grpEventCurrency" visible="0" orientation="horizontal" alignment="top" spacing="5">
+                                <node size="28 31">
+                                    <node id="imgEventCurrency" position="13 17" scale="0.23" />
+                                </node>
+                                <text id="txtEventCurrency" size="56 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="ff93c3ff" />
+                            </stack>
+
+                            <text id="txtEventCurrencySeparator" visible="0" text="/" size="15 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+
+                            <bounds>
+                                <image sprite_id="icon_coin:common" position="-20 18" scale="0.4" />
+                                <text id="txtCoins" size="56 26" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                            </bounds>
+                        </stack>
+                    </nine_patch>
+
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="244 48" anchor="0">
+                        <text id="treasure_hunter_popup_kills" size="155 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtKills" size="50 26" position="180 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+                </stack>
+
+                <stack orientation="horizontal" spacing="15" anchor="0">
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="364 48" anchor="0">
+                        <text id="treasure_hunter_popup_time" size="230 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtTime" size="95 26" position="255 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+
+                    <nine_patch sprite_id="nine_patch_info_back:game" patch="18 18 4 4" size="244 48" anchor="0">
+                        <text id="treasure_hunter_popup_experience" size="135 26" position="20 8" h_align="left" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" />
+                        <text id="txtExperience" size="70 26" position="160 8" h_align="right" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="fff7dd10" />
+                    </nine_patch>
+                </stack>
+            </stack>
+
+            <layout item_size="288 106" size="864 106" position="-105 560">
+                <button id="btnShare" visible="0" sprite_id="btn_big_blue:common" pressed_scale="0.97">
+                    <image sprite_id="icon_share_blue:common" position="128 52" />
+                </button>
+
+                <button id="btnInvite" visible="0" sprite_id="btn_big_blue:common" pressed_scale="0.97">
+                    <bounds anchor="0.5" position="128 48">
+                        <image sprite_id="icon_facebook:common" position="-30 25" scale="0.9" />
+                        <text id="button_invite_title" size="180 40" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline_blue" />
+                    </bounds>
+                </button>
+
+                <button id="btnRestart" visible="0" sprite_id="btn_big_green:common" pressed_scale="0.97">
+                    <mask mask_size="84 87" position="7 6">
+                        <nine_patch sprite_id="nine_patch_base_big:common" patch="19 19 2 2" size="106 87" anchor="0" color="33000000">
+                            <image sprite_id="icon_restart_green:common" position="43 45" scale="0.95" />
+                        </nine_patch>
+                    </mask>
+
+                    <text multiline="true" id="txtRestart" size="130 64" position="103 11" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="40" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline_green" />
+                </button>
+
+                <button id="btnRestartWithBonus" visible="0" sprite_id="btn_big_green:common" pressed_scale="0.97">
+                    <node id="content">
+                        <mask mask_size="84 87" position="7 6">
+                            <nine_patch sprite_id="nine_patch_base_big:common" patch="19 19 2 2" size="106 87" anchor="0" color="33000000">
+                                <image id="imgVideo" visible="0" sprite_id="icon_video_green:common" position="43" scale="0.65" />
+                                <image id="imgRestart" visible="0" sprite_id="icon_restart_green:common" position="43 45" scale="0.95" />
+                            </nine_patch>
+                        </mask>
+
+                        <text multiline="true" id="txtRestartWithBonus" size="130 64" position="103 12" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="40" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline_green" />
+
+                        <nine_patch sprite_id="nine_patch_holder_powerups:game" patch="12 12 2 2" size="108 42" anchor="0" position="161 -20">
+                            <image sprite_id="items_btn_magnet:common" position="34 20" scale="0.52" />
+                            <image sprite_id="items_btn_speedup:common" position="61 20" scale="0.52" />
+                            <image sprite_id="items_btn_zoom:common" position="88 20" scale="0.52" />
+                            <text text="+" size="30 34" position="5 -2" metrics="line" trim_container="true" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" font_effect_bundle="common/fonts/effects.fe" font_effect_name="outline13" />
+                        </nine_patch>
+                    </node>
+                </button>
+            </layout>
+
+            <alignment h_align="center" v_align="top">
+                <nine_patch sprite_id="nine_patch_header:common" patch="0 1 12 2" size="900 64" hotspot="450 0" position="0 22" color="40000000">
+                    <text id="gameover_popup_title" size="574 46" position="163 2" metrics="line" font="common/fonts/NotoSans-CondensedBlack.ttf" font_size="50" color="ffffff79" shadow_offset="2 3" shadow_color="33000000" />
+                </nine_patch>
+            </alignment>
+
+            <alignment h_align="right" v_align="top">
+                <button id="btnClose" sprite_id="btn_small_orange:common" touch_padding="60 60 60 54" position="-55 55" scale="0.64" pressed_scale="0.97">
+                    <image sprite_id="icon_cross_orange:common" position="50 51" />
+                </button>
+            </alignment>
+        </autoload>
+    </gameover_popup>
+</root>

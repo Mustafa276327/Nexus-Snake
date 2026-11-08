@@ -8,6 +8,7 @@ import { menu } from './ui/menu.js';
 import { settingsUI } from './ui/settings.js';
 import { hud } from './ui/hud.js';
 import { toast } from './ui/toast.js';
+import { arenaAudio } from './game/arena/audio.js';
 
 // Global error handler
 window.addEventListener('error', (e) => {
@@ -29,6 +30,18 @@ async function init() {
     // Initialize UI components
     await menu.loadUnlockedModes();
     await settingsUI.init();
+
+    // Original runtime-generated music & SFX
+    window.__nexusAudio = arenaAudio;
+    try {
+      const settings = await storage.getSettings();
+      arenaAudio.enabled = settings.sound !== false;
+    } catch { /* ignore */ }
+    const unlockAudio = () => {
+      if (arenaAudio.enabled) arenaAudio.init();
+    };
+    window.addEventListener('pointerdown', unlockAudio, { once: true });
+    window.addEventListener('keydown', unlockAudio, { once: true });
 
     // Set up global callbacks
     engine.onScoreChange = (score) => hud.updateScore(score);

@@ -54,7 +54,10 @@ export class SettingsUI {
     // Theme
     renderer.setTheme(this.currentSettings.theme);
 
-    // Sound - handled by audio system (not implemented yet)
+    // Sound
+    if (window.__nexusAudio) {
+      window.__nexusAudio.setEnabled(this.currentSettings.sound);
+    }
     // Haptics - handled by engine
 
     // Controls

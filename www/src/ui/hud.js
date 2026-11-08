@@ -1,5 +1,7 @@
 // Nexus Snake - HUD (Heads-Up Display)
 
+import { MODES } from '../game/config.js';
+
 export class HUD {
   constructor() {
     this.scoreEl = document.getElementById('score');
@@ -33,7 +35,6 @@ export class HUD {
   }
 
   updateMode(modeId) {
-    const { MODES } = require('../game/config.js');
     const mode = MODES[modeId];
     if (mode && this.modeNameEl && this.modeDescEl) {
       this.modeNameEl.textContent = mode.name.toUpperCase();

@@ -1,0 +1,104 @@
+
+head_fire_horse.png
+size: 260,492
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Btheeth_down
+  rotate: false
+  xy: 2, 156
+  size: 121, 109
+  orig: 122, 114
+  offset: 1, 0
+  index: -1
+brow_L
+  rotate: 270
+  xy: 200, 243
+  size: 53, 52
+  orig: 53, 52
+  offset: 0, 0
+  index: -1
+brow_R
+  rotate: 270
+  xy: 192, 437
+  size: 53, 52
+  orig: 53, 52
+  offset: 0, 0
+  index: -1
+ear_R
+  rotate: 270
+  xy: 2, 70
+  size: 86, 114
+  orig: 86, 114
+  offset: 0, 0
+  index: -1
+eye_L
+  rotate: false
+  xy: 223, 356
+  size: 34, 37
+  orig: 34, 37
+  offset: 0, 0
+  index: -1
+eye_R
+  rotate: false
+  xy: 223, 299
+  size: 34, 37
+  orig: 34, 37
+  offset: 0, 0
+  index: -1
+eye_dark_R
+  rotate: false
+  xy: 2, 448
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+fire_big
+  rotate: false
+  xy: 2, 260
+  size: 219, 230
+  orig: 219, 230
+  offset: 0, 0
+  index: -1
+fire_small
+  rotate: false
+  xy: 124, 138
+  size: 109, 121
+  orig: 109, 121
+  offset: 0, 0
+  index: -1
+head
+  rotate: 270
+  xy: 116, 64
+  size: 73, 120
+  orig: 144, 120
+  offset: 0, 0
+  index: -1
+iris
+  rotate: false
+  xy: 2, 276
+  size: 18, 18
+  orig: 22, 21
+  offset: 2, 2
+  index: -1
+nosdril_R
+  rotate: false
+  xy: 91, 13
+  size: 91, 57
+  orig: 91, 57
+  offset: 0, 0
+  index: -1
+shine
+  rotate: false
+  xy: 2, 3
+  size: 87, 64
+  orig: 89, 66
+  offset: 1, 1
+  index: -1
+teeth_top
+  rotate: 270
+  xy: 195, 5
+  size: 69, 36
+  orig: 69, 36
+  offset: 0, 0
+  index: -1

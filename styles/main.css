@@ -893,3 +893,187 @@ input:focus-visible {
     display: none !important;
   }
 }
+
+/* ============================================================
+   Arena mode + skin picker
+   ============================================================ */
+
+/* Hide grid HUD while the continuous arena is running */
+body.arena-mode #hud,
+body.arena-mode #powerupIndicators,
+body.arena-mode #dpadOverlay {
+  display: none !important;
+}
+
+body.arena-mode canvas#game {
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Arena mode card */
+.mode-card-arena {
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.16), rgba(247, 129, 102, 0.12));
+  border-color: rgba(88, 166, 255, 0.55);
+  overflow: hidden;
+}
+
+.mode-card-arena::after {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 30% 30%, rgba(88, 166, 255, 0.18), transparent 60%);
+  pointer-events: none;
+  animation: arenaPulse 6s ease-in-out infinite;
+}
+
+@keyframes arenaPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.mode-card-arena.selected {
+  border-color: #7ef0ff;
+  box-shadow: 0 0 24px rgba(88, 200, 255, 0.35);
+}
+
+.new-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  color: #04121f;
+  background: linear-gradient(135deg, #7ef0ff, #58a6ff);
+  vertical-align: middle;
+}
+
+/* Skin picker */
+.skin-section {
+  margin-bottom: 20px;
+}
+
+.skin-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.skin-section-head h3 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--fg-secondary);
+}
+
+.skin-hint {
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+.skin-picker {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.skin-picker::-webkit-scrollbar {
+  height: 6px;
+}
+
+.skin-picker::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.skin-chip {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 64px;
+  padding: 8px 4px 6px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--skin-b) 22%, transparent), transparent 70%),
+    var(--bg-tertiary);
+  color: var(--fg-secondary);
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.skin-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--skin-glow);
+}
+
+.skin-chip.selected {
+  border-color: var(--skin-glow);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--skin-glow) 55%, transparent);
+  color: var(--fg-primary);
+}
+
+.skin-emoji {
+  font-size: 20px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px var(--skin-glow));
+}
+
+.skin-name {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* Floating boost button (arena only, mobile friendly) */
+.arena-boost {
+  display: none;
+  position: fixed;
+  right: 22px;
+  bottom: 26px;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid rgba(126, 240, 255, 0.65);
+  background: radial-gradient(circle at 35% 30%, rgba(126, 240, 255, 0.35), rgba(8, 20, 38, 0.85));
+  color: #bff6ff;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  box-shadow: 0 0 26px rgba(88, 200, 255, 0.35), inset 0 0 18px rgba(88, 200, 255, 0.15);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  backdrop-filter: blur(6px);
+}
+
+body.arena-mode .arena-boost {
+  display: flex;
+}
+
+.arena-boost:active {
+  transform: scale(0.94);
+  box-shadow: 0 0 34px rgba(126, 240, 255, 0.65);
+}
+
+@media (max-width: 480px) {
+  .arena-boost {
+    width: 66px;
+    height: 66px;
+    right: 16px;
+    bottom: 20px;
+    font-size: 26px;
+  }
+}

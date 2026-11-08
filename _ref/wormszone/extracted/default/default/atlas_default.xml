@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<atlas>
+    <logo texture="default/atlas_default.png" rect="1 1 403 203" hotspot="201 101" />
+    <shine texture="default/atlas_default.png" rect="1 206 203 192" hotspot="101 96" />
+</atlas>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <streams>
+        <music_0 path="sounds/Sound_Tricks_-_Sport_Loop.mp3" loop="1" volume="0.3" />
+    </streams>
+
+    <effects>
+        <btn_click path="sounds/metalClick.mp3" />
+        <show_popup path="sounds/bookOpen.mp3" />
+        <hide_popup path="sounds/bookClose.mp3" />
+        <buy_success path="sounds/buySuccess.mp3" />
+        <buy_fail path="sounds/buyFail.mp3" />
+        <task path="sounds/task.mp3" />
+        <task_done path="sounds/taskDone.mp3" />
+        <task_failed path="sounds/taskFailed.mp3" />
+        <lock_open path="sounds/lockOpen.mp3" />
+        <unboxing_reward path="sounds/unboxingReward.mp3" />
+        <default_gift_open path="sounds/defaultGiftOpen.mp3" />
+        <surprise_open path="sounds/surpriseOpen.mp3" />
+        <glitter path="sounds/glitter.mp3" />
+        <swipe path="sounds/swipe.mp3" />
+        <card_flip path="sounds/cardFlip.mp3" volume="0.6" />
+
+        <upgrade_1 path="sounds/upgrade1.mp3" volume="0.7" />
+        <upgrade_2 path="sounds/upgrade2.mp3" volume="0.7" />
+        <upgrade_3 path="sounds/upgrade3.mp3" volume="0.7" />
+        <upgrade_4 path="sounds/upgrade4.mp3" volume="0.7" />
+
+        <fortune_wheel_start path="sounds/fortuneWheelStart.mp3" />
+        <fortune_wheel_tick path="sounds/fortuneWheelTick.mp3" />
+        <fortune_wheel_firework path="sounds/fortuneWheelFirework.mp3" />
+        <fortune_wheel_prize path="sounds/fortuneWheelPrize.mp3" />
+        <fortune_wheel_win_low path="sounds/fortuneWheelWinLow.mp3" />
+        <fortune_wheel_win_mid path="sounds/fortuneWheelWinMid.mp3" />
+        <fortune_wheel_win_high path="sounds/fortuneWheelWinHigh.mp3" />
+
+        <race_fanfare_start path="sounds/raceFanfareStart.mp3" volume="0.6" />
+        <race_fanfare_finish path="sounds/raceFanfareFinish.mp3" volume="0.6" />
+        <race_swimmer path="sounds/raceSwimmer.mp3" loop="1" />
+        <race_skater path="sounds/raceSkater.mp3" loop="1" />
+        <race_runner path="sounds/raceRunner.mp3" loop="1" />
+
+        <yummyup path="sounds/yummyup.mp3" />
+        <coinup path="sounds/coinup.mp3" />
+        <powerup path="sounds/powerup.mp3" />
+        <powerup_use path="sounds/powerupUse.mp3" volume="0.8" />
+        <worm_collision path="sounds/wormCollision.mp3" />
+        <worm_jump path="sounds/wormJump.mp3" />
+        <worm_landing path="sounds/wormLanding.mp3" />
+        <bug_squish path="sounds/bugSquish.mp3" />
+        <bug_powerups path="sounds/bugPowerups.mp3" volume="0.6" />
+        <bug_event path="sounds/bugEvent.mp3" volume="0.6" />
+        <treasure_chest_open path="sounds/treasureChestOpen.mp3" />
+        <treasure_chest_coins_flying path="sounds/treasureChestCoinsFlying.mp3" />
+        <results path="sounds/results.mp3" />
+    </effects>
+</root>

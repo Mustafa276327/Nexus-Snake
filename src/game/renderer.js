@@ -14,6 +14,7 @@ export class Renderer {
     this.dpr = window.devicePixelRatio || 1;
     this.currentTheme = 'dark';
     this.showGrid = true;
+    this.arenaMode = false;
     this.animationFrame = null;
     this.lastRenderTime = 0;
     this.fps = 60;
@@ -32,9 +33,13 @@ export class Renderer {
   }
 
   resize() {
+    if (this.arenaMode) {
+      this.resizeArena();
+      return;
+    }
     const rect = this.canvas.getBoundingClientRect();
-    const maxWidth = Math.min(rect.width, window.innerWidth);
-    const maxHeight = Math.min(rect.height, window.innerHeight - 80); // Leave room for HUD
+    const maxWidth = Math.min(rect.width || window.innerWidth, window.innerWidth);
+    const maxHeight = Math.min(rect.height || window.innerHeight, window.innerHeight - 80); // Leave room for HUD
 
     // Calculate cell size to fit grid
     this.cellSize = Math.floor(Math.min(maxWidth / this.gridWidth, maxHeight / this.gridHeight));
@@ -44,19 +49,37 @@ export class Renderer {
     this.height = this.gridHeight * this.cellSize;
 
     // Set canvas resolution (backing store)
-    this.canvas.width = this.width * this.dpr;
-    this.canvas.height = this.height * this.dpr;
+    this.canvas.width = Math.round(this.width * this.dpr);
+    this.canvas.height = Math.round(this.height * this.dpr);
 
     // Set canvas display size (CSS)
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
 
-    // Scale context for HiDPI
-    this.ctx.scale(this.dpr, this.dpr);
+    // Scale context for HiDPI (absolute, never compounding)
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
 
     // Center canvas
     this.canvas.style.margin = 'auto';
     this.canvas.style.display = 'block';
+  }
+
+  resizeArena() {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.canvas.width = Math.round(this.width * this.dpr);
+    this.canvas.height = Math.round(this.height * this.dpr);
+    this.canvas.style.width = `${this.width}px`;
+    this.canvas.style.height = `${this.height}px`;
+    this.canvas.style.margin = '0';
+    this.canvas.style.display = 'block';
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+  }
+
+  setArenaMode(on) {
+    this.arenaMode = !!on;
+    document.body.classList.toggle('arena-mode', this.arenaMode);
+    this.resize();
   }
 
   setGridSize(width, height) {

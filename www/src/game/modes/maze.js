@@ -12,8 +12,6 @@ export class MazeMode {
   }
 
   init() {
-    this.engine.gridWidth = 20;
-    this.engine.gridHeight = 20;
     renderer.setGridSize(20, 20);
 
     this.engine.obstacleManager.generate('maze');

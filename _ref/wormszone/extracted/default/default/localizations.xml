@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <gameover_popup_title
+        en="Result" />
+
+    <gameover_popup_rank
+        en="Rank" />
+
+    <gameover_popup_score
+        en="Worm weight" />
+
+    <lastchance_popup_title
+        en="Last chance" />
+
+    <lastchance_popup_no_thanks
+        en="No, thanks" />
+
+    <sessiontimeout_popup_tip
+        en="Don't lose your progress" />
+</root>
